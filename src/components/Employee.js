@@ -19,7 +19,7 @@ function Employee(props) {
             avatar: 'https://haycafe.vn/wp-content/uploads/2022/02/Hinh-nen-gai-Nhat-xinh-dep-dang-yeu.jpg',
             yob: '2004-08-15',
             gender: 'f',
-            status: false
+            status: true
         },
         {
             id: 3,
@@ -36,6 +36,10 @@ function Employee(props) {
     const handleChange = (e) => {
         let name = e.target.name;
         let value = e.target.value;
+        // Lấy giá trị nút checkbox
+        if (e.target.type == "checkbox") {
+            value = e.target.checked;
+        }
         setForms(values => ({ ...values, [name]: value }));
     }
 
@@ -43,7 +47,7 @@ function Employee(props) {
         e.preventDefault();
         setCnt(cnt + 1);
         forms.id = cnt;        
-        // console.log(forms);
+        console.log(forms);
         // console.log(data);
         setData(data.concat(forms));
     }
@@ -54,7 +58,7 @@ function Employee(props) {
 
     useEffect(startLoad, []);
     return (
-        <div className='container border mt-3'>
+        <div className='container border mt-3 p-3'>
             <h2>Hải sản ông Victor</h2>
             <hr />
             <div className='row'>
@@ -76,8 +80,8 @@ function Employee(props) {
                             </div>
                             <div class="mb-3 mt-3">
                                 <label for="gender" class="form-label">Giới tính: </label>
-                                <input type="radio" onChange={handleChange} class="form-check-input" name="gender" value='m' /> Nam
-                                <input type="radio" onChange={handleChange} class="form-check-input" name="gender" value='f' checked /> Nữ
+                                <input type="radio" onChange={handleChange} class="form-check-input" name="gender" value='m' checked={forms.gender == 'm'} /> Nam
+                                <input type="radio" onChange={handleChange} class="form-check-input" name="gender" value='f' checked={forms.gender == 'f'} /> Nữ
                             </div>
                             <div class="form-check mb-3">
                                 <label class="form-check-label">
@@ -111,7 +115,7 @@ function Employee(props) {
                                             <img width='50px' src={item.avatar} />
                                         </td>
                                         <td>{item.yob}</td>
-                                        <td>{item.gender}</td>
+                                        <td>{item.gender == 'm'? 'Nam' : 'Nữ'}</td>
                                         <td>
                                             <input type='checkbox' checked={item.status} />
                                         </td>
